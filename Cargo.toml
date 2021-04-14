@@ -3,6 +3,23 @@ name = "io-arg"
 version = "0.1.0"
 authors = ["Markus Klein <markus-klein@live.de>"]
 edition = "2018"
+license = "MIT"
+repository = "https://github.com/pacman82/io-arg"
+documentation = "https://docs.rs/io-arg/"
+
+# A short blurb about the package. This is not rendered in any format when
+# uploaded to crates.io (aka this is not markdown).
+description = "Conviniently accept either standard streams or file paths in CLI tools written in Rust as arguments."
+
+# This is a list of up to five keywords that describe this crate. Keywords
+# are searchable on crates.io, and you may choose any words that would
+# help someone find this crate.
+keywords = ["CLI"]
+
+# This is a list of up to five categories where this crate would fit.
+# Categories are a fixed list available at crates.io/category_slugs, and
+# they must match exactly.
+categories = []
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
