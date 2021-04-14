@@ -1,4 +1,4 @@
-# IO Args
+# IO Arg
 
 Conviniently accept either standard streams or file paths in CLI tools written in Rust as arguments.
 
