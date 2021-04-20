@@ -1,4 +1,6 @@
-use std::{path::PathBuf, str::FromStr};
+use std::{io, path::PathBuf, str::FromStr};
+
+use crate::{Input, Output};
 
 /// Argument for CLI tools which can either take a file or STDIN/STDOUT.
 ///
@@ -39,6 +41,16 @@ impl IoArg {
             IoArg::StdStream => false,
             IoArg::File(_) => true,
         }
+    }
+
+    /// Either calls `stdin` or `File::open` depending on `io_arg`.
+    pub fn open_as_input(self) -> io::Result<Input> {
+        Input::new(self)
+    }
+
+    /// Either calls `stdout` or `File::create` depending on `io_arg`.
+    pub fn open_as_output(self) -> io::Result<Output> {
+        Output::new(self)
     }
 }
 

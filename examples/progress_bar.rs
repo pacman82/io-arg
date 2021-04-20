@@ -1,9 +1,9 @@
-use std::{fs::File, io};
+use std::{fs::File, io::{self, BufReader}};
 
+use atty::{isnt, Stream};
 use indicatif::ProgressBar;
 use io_arg::IoArg;
 use structopt::StructOpt;
-use atty::{isnt, Stream};
 
 /// A command line tool taking a required input argument and an optional output argument.
 #[derive(Debug, StructOpt)]
@@ -35,30 +35,26 @@ fn main() -> io::Result<()> {
     // duration of the program.
     let std_in;
 
-    // Same story for `std_out` as for stdin. We keep it alive for the duration of the program, but
-    // delay initiaization until we know we need it (i.e. we are writing to stdout and not into a
-    // file, we open in this code).
-    let std_out;
-
-    let input: Box<dyn io::Read> = match args.input {
+    let input: Box<dyn io::BufRead> = match args.input {
         IoArg::File(input) => {
             // Path argument specified. Open file and initialize progress bar.
             let file = File::open(&input)?;
             // Only show Progress bar, if input is a file and output is not /dev/tty.
             //
-            // * We need the input to so we have the file metadata and therefore file length, to know
-            // the amount of data we are going to proccess. Otherwise we can't set the length of the
-            // progress bar.
-            // * We don't want the Progress bar to interfere with the output, if writing to /dev/tty.
-            // Progress bar interferes with formatting if stdout and stderr both go to /dev/tty
+            // * We need the input to so we have the file metadata and therefore file length, to
+            // know the amount of data we are going to proccess. Otherwise we can't set the length
+            // of the progress bar.
+            // * We don't want the Progress bar to interfere with the output, if writing to
+            // /dev/tty. Progress bar interferes with formatting if stdout and stderr both go to
+            // /dev/tty
             if let Some(progress_bar) = &progress_bar {
                 let len = file.metadata()?.len();
                 progress_bar.set_length(len);
                 let file_with_pbar = progress_bar.wrap_read(file);
-                Box::new(file_with_pbar)
+                Box::new(BufReader::new(file_with_pbar))
             } else {
                 // Input file, but writing output to /dev/tty
-                Box::new(file)
+                Box::new(BufReader::new(file))
             }
         }
         IoArg::StdStream => {
@@ -68,17 +64,8 @@ fn main() -> io::Result<()> {
         }
     };
 
-    let output: Box<dyn io::Write> = match args.output {
-        IoArg::File(output) => {
-            let writer = io::BufWriter::new(File::create(&output)?);
-            Box::new(writer)
-        }
-        IoArg::StdStream => {
-            std_out = io::stdout();
-            let writer = io::BufWriter::new(std_out.lock());
-            Box::new(writer)
-        }
-    };
+    let mut output = args.output.open_as_output()?;
+    let output = output.write();
 
     // Here the program would actually do stuff with `input` and `output`.
 
