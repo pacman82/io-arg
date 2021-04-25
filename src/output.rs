@@ -1,7 +1,4 @@
-use std::{
-    fs::File,
-    io::{self, stdout, Stdout, Write},
-};
+use std::{fs::File, io::{self, BufWriter, Stdout, Write, stdout}};
 
 use crate::IoArg;
 
@@ -22,11 +19,12 @@ impl Output {
     }
 
     /// Wraps either standard out or the file in a `Box<dyn Write>`. The resulting writer mutably
-    /// borrows the instance, since it may lock standard out.
+    /// borrows the instance, since it may lock standard out. A file will be wrapped in a
+    /// `BufWriter` in order to minimize system calls.
     pub fn write(&mut self) -> Box<dyn Write + '_> {
         match self {
             Output::StdOut(stream) => Box::new(stream.lock()),
-            Output::File(file) => Box::new(file),
+            Output::File(file) => Box::new(BufWriter::new(file)),
         }
     }
 }
