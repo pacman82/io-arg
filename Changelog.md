@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+* Rename `Readme.md` to `README.md` so it shows on `crates.io`.
+
 ## 0.1.2
 
 * Updated to Rust edition 2021

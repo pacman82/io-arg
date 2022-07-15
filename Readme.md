@@ -6,10 +6,10 @@ Conviniently accept either standard streams or file paths in CLI tools written i
 
 ```rust
 use io_arg::IoArg;
-use structopt::StructOpt;
+use clap::Parser;
 
 /// A command line tool taking a required input argument and an optional output argument.
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Parser)]
 struct Cli {
     /// Path to input file. Set to "-" to use STDIN instead of a file.
     input: IoArg,
