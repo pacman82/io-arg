@@ -18,10 +18,10 @@ impl Output {
         Ok(ret)
     }
 
-    /// Wraps either standard out or the file in a `Box<dyn Write>`. The resulting writer mutably
-    /// borrows the instance, since it may lock standard out. A file will be wrapped in a
-    /// `BufWriter` in order to minimize system calls.
-    pub fn write(&mut self) -> Box<dyn Write + '_> {
+    /// Wraps either standard out or the file in a `Box<dyn Write>`. In case of [`Output::StdOut`]
+    /// standard out will be locked. In case of [`Output::File`] the file will be wrapped in
+    /// [`std::io::BufWriter`] in order to minimize system calls.
+    pub fn into_write(self) -> Box<dyn Write> {
         match self {
             Output::StdOut(stream) => Box::new(stream.lock()),
             Output::File(file) => Box::new(BufWriter::new(file)),

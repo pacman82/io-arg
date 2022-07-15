@@ -58,8 +58,7 @@ fn main() -> io::Result<()> {
         }
     };
 
-    let mut output = args.output.open_as_output()?;
-    let output = output.write();
+    let output = args.output.open_as_output()?.into_write();
 
     // Here the program would actually do stuff with `input` and `output`.
 

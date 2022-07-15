@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0
+
+* Replaced `Output::write` with `Output::into_write`.
+
 ## 0.1.4
 
 * Rename `Readme.md` to `README.md` so it shows on `crates.io`.
