@@ -3,15 +3,15 @@ use std::{fs::File, io::{self, BufReader}};
 use atty::{isnt, Stream};
 use indicatif::ProgressBar;
 use io_arg::IoArg;
-use structopt::StructOpt;
+use clap::Parser;
 
 /// A command line tool taking a required input argument and an optional output argument.
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Parser)]
 struct Cli {
     /// Path to input file. Set to "-" to use STDIN instead of a file.
     input: IoArg,
     /// Path to output file. Leave out or set to "-" to use STDOUT instead of a file.
-    #[structopt(long, short = "o", default_value = "-")]
+    #[clap(long, short = 'o', default_value = "-")]
     output: IoArg,
 }
 
@@ -29,11 +29,6 @@ fn main() -> io::Result<()> {
     } else {
         None
     };
-
-    // Keep our reference to stdin alive, if need be. Only initialized if we don't read from a file
-    // and read from stdin. We hold it alive at top level scop, so we can hold the lock to it, for
-    // duration of the program.
-    let std_in;
 
     let input: Box<dyn io::BufRead> = match args.input {
         IoArg::File(input) => {
@@ -59,8 +54,7 @@ fn main() -> io::Result<()> {
         }
         IoArg::StdStream => {
             // Input path not set => Just use stdin
-            std_in = io::stdin();
-            Box::new(std_in.lock())
+            Box::new(io::stdin().lock())
         }
     };
 

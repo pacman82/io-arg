@@ -8,10 +8,10 @@ use crate::{Input, Output};
 /// a hard time operating on a file named "-".
 ///
 /// ```
-/// use structopt::StructOpt;
+/// use clap::Parser;
 /// use io_arg::IoArg;
 ///
-/// #[derive(Debug, StructOpt)]
+/// #[derive(Debug, Parser)]
 /// struct Cli {
 ///     /// Path to input file. Set to "-" to use STDIN instead of a file.
 ///     input: IoArg,
