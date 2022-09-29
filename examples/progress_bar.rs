@@ -16,7 +16,7 @@ struct Cli {
 }
 
 fn main() -> io::Result<()> {
-    let args = Cli::from_args();
+    let args = Cli::parse();
 
     // Only initialized in case `input` specifies a file path, because only then we have information
     // about input length.

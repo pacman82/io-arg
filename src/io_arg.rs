@@ -19,7 +19,7 @@ use crate::{Input, Output};
 ///     output: IoArg,
 /// }
 /// ```
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum IoArg {
     /// Indicates that the IO is connected to stdin/stdout. Represented as a "-" on the command line.
     StdStream,

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+* Implement `Clone` for `IoArg`.
+
 ## 0.2.0
 
 * Replaced `Output::write` with `Output::into_write`.
