@@ -33,7 +33,7 @@ fn main() -> io::Result<()> {
     let input: Box<dyn io::BufRead> = match args.input {
         IoArg::File(input) => {
             // Path argument specified. Open file and initialize progress bar.
-            let file = File::open(&input)?;
+            let file = File::open(input)?;
             // Only show Progress bar, if input is a file and output is not /dev/tty.
             //
             // * We need the input to so we have the file metadata and therefore file length, to
