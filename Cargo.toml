@@ -26,5 +26,5 @@ categories = []
 
 [dev-dependencies]
 clap = { version = "4.5.27", features = ["derive"] }
-indicatif = "0.17.9"
+indicatif = "0.18.0"
 atty = "0.2.14"
