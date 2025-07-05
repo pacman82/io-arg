@@ -1,5 +1,17 @@
 # Changelog
 
+
+## [0.2.2](https://github.com/pacman82/io-arg/compare/v0.2.1...v0.2.2) - 2025-07-05
+
+### Other
+
+- Introduce release-plz
+- Update indicatif requirement from 0.17.9 to 0.18.0
+- Update dependencies
+- Rename changelog to upper case
+- Bump actions/checkout from 3 to 4
+- update dependencies
+
 ## 0.2.1
 
 * Implement `Clone` for `IoArg`.
