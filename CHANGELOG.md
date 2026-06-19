@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [0.2.3](https://github.com/pacman82/io-arg/compare/v0.2.2...v0.2.3) - 2026-06-19
+
+### Other
+
+- Update dev-dependencies
+- Bump actions/checkout from 6 to 7
+- Bump actions/checkout from 5 to 6
+- Bump actions/checkout from 4 to 5
+
 ## [0.2.2](https://github.com/pacman82/io-arg/compare/v0.2.1...v0.2.2) - 2025-07-05
 
 ### Other
